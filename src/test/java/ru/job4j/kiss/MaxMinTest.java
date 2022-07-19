@@ -7,8 +7,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class MaxMinTest {
-    List<Integer> values = List.of(1, 22, 55, 100, 45, 52);
-    MaxMin maxMin = new MaxMin();
+    private List<Integer> values = List.of(1, 22, 55, 100, 45, 52);
+    private MaxMin maxMin = new MaxMin();
 
     @Test
     public void whenMaxInt() {
@@ -20,6 +20,11 @@ public class MaxMinTest {
     public void whenMinInt() {
         int test =  maxMin.min(values, Integer::compareTo);
         assertEquals(1, test);
+    }
+    @Test
+    public void whenNullInt() {
+        List<Integer> values = List.of();
+        assertNull(maxMin.max(values, Integer::compareTo));
     }
 
 }

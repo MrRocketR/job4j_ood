@@ -13,10 +13,14 @@ public class MaxMin {
         return comparingMethod(value, comparator.reversed());
 }
         private static <T> T comparingMethod(List<T> value, Comparator<T> comparator) {
-            T rsl = value.get(0);
-            for (T elem : value) {
-                if (comparator.compare(rsl, elem) < 0) {
-                    rsl = elem;
+            T rsl = null;
+            if (value.isEmpty()) {
+            } else {
+                rsl = value.get(0);
+                for (T elem : value) {
+                    if (comparator.compare(rsl, elem) < 0) {
+                        rsl = elem;
+                    }
                 }
             }
             return rsl;
