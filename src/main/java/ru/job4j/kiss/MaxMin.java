@@ -13,8 +13,9 @@ public class MaxMin {
         return comparingMethod(value, comparator.reversed());
 }
         private static <T> T comparingMethod(List<T> value, Comparator<T> comparator) {
-            T rsl = null;
+            T rsl;
             if (value.isEmpty()) {
+                rsl = null;
             } else {
                 rsl = value.get(0);
                 for (T elem : value) {
