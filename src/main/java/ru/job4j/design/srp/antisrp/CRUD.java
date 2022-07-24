@@ -1,4 +1,4 @@
-package ru.job4j.srp.antisrp;
+package ru.job4j.design.srp.antisrp;
 /*
 Основная задача данного класса в работе с базаой данных
 В данном классе реализовано 6 методов:
