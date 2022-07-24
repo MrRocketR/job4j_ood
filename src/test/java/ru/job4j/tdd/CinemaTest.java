@@ -41,8 +41,6 @@ public class CinemaTest {
         Calendar date = Calendar.getInstance();
         date.set(2020, 10, 10, 23, 00);
         Ticket ticket = cinema.buy(account, 1, 1, date);
-        Ticket3D invalidTicket = new Ticket3D();
-        Assert.assertNotEquals(ticket, invalidTicket);
         }
 
     @Ignore
@@ -53,8 +51,7 @@ public class CinemaTest {
         Calendar date = Calendar.getInstance();
         date.set(2020, 10, 10, 23, 00);
         Ticket ticket = cinema.buy(account, 1, 1, date);
-        Ticket3D invalidTicket = new Ticket3D();
-        Assert.assertNotEquals(ticket, invalidTicket);
+        Ticket ticket2 = cinema.buy(account, 1, 1, date);
     }
 
     @Ignore
@@ -64,12 +61,7 @@ public class CinemaTest {
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
         date.set(2020, 10, 10, 23, 00);
-        Calendar actual = Calendar.getInstance();
-        actual.set(2020, 11, 1, 23, 00);
-        Ticket ticket = cinema.buy(account, 1, 1, date);
-        Assert.assertNotEquals(ticket, new Ticket3D());
+        Ticket ticket = cinema.buy(account, -1, -1, date);
     }
 }
-
-
 
