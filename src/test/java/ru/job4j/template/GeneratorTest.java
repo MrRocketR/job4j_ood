@@ -18,13 +18,17 @@ public class GeneratorTest {
     @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void whenEmptyMap() {
-        Assert.assertTrue(testMap.isEmpty());
+        TemplateGenerator templateGenerator = new TemplateGenerator();
+        template =  "Test ${name} and ${subject}";
+        templateGenerator.produce(template, testMap);
     }
 
     @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void whenEmptyTemplate() {
-        Assert.assertTrue(template.isEmpty());
+        TemplateGenerator templateGenerator = new TemplateGenerator();
+        testMap.put("robot", "bot");
+        templateGenerator.produce(template, testMap);
     }
 
     @Ignore
@@ -32,7 +36,26 @@ public class GeneratorTest {
     public void whenNullValue() {
         template = "I am a ${name}, Who are ${subject}? ";
         testMap.put("Petr", null);
-        testGen.produce(template, testMap);
-        Assert.assertNull(testMap.get("Petr"));
+        TemplateGenerator templateGenerator = new TemplateGenerator();
+        templateGenerator.produce(template, testMap);
+    }
+
+    @Ignore
+    @Test(expected = IllegalArgumentException.class)
+    public void whenProduceWork() {
+        template = "I am a ${name}, Who are ${subject}? ";
+        testMap.put("Petr", "Same Petr");
+        TemplateGenerator templateGenerator = new TemplateGenerator();
+        templateGenerator.produce(template, testMap);
+    }
+
+    @Ignore
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWrongKey() {
+        template = "I am a ${name}, Who are ${subject}? ";
+        testMap.put("Petr", "Same Petr");
+        TemplateGenerator templateGenerator = new TemplateGenerator();
+        templateGenerator.produce(template, testMap);
+        Assert.assertNotEquals(testMap.get("Petr"), "Same Oleg");
     }
 }
