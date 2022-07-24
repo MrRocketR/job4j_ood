@@ -14,7 +14,6 @@ import java.util.List;
 public class CinemaTest {
 
     @Ignore
-    @Test(expected = IllegalArgumentException.class)
     public void whenBuy() {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
@@ -25,7 +24,6 @@ public class CinemaTest {
     }
 
     @Ignore
-    @Test(expected = IllegalArgumentException.class)
     public void whenFind() {
         Cinema cinema = new Cinema3D();
         cinema.add(new Session3D());
@@ -40,7 +38,8 @@ public class CinemaTest {
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
         date.set(2020, 10, 10, 23, 00);
-        Ticket ticket = cinema.buy(account, 1, 1, date);
+        Ticket ticket1 = cinema.buy(account, 1, 1, date);
+        Ticket ticket2 = cinema.buy(account, 1, 1, date);
         }
 
     @Ignore
@@ -50,8 +49,8 @@ public class CinemaTest {
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
         date.set(2020, 10, 10, 23, 00);
-        Ticket ticket = cinema.buy(account, 1, 1, date);
-        Ticket ticket2 = cinema.buy(account, 1, 1, date);
+        Ticket ticket = cinema.buy(account, -1, -1, date);
+
     }
 
     @Ignore
@@ -60,8 +59,8 @@ public class CinemaTest {
         Account account = new AccountCinema();
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
-        date.set(2020, 10, 10, 23, 00);
-        Ticket ticket = cinema.buy(account, -1, -1, date);
+        date.set(1900, 13, 40, 40, 00);
+        Ticket ticket = cinema.buy(account, 1, 1, date);
     }
 }
 
