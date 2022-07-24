@@ -1,4 +1,7 @@
 package ru.job4j.design.srp.report;
 
-public class Report {
+import java.util.function.Predicate;
+
+public interface Report {
+    String generate(Predicate<Employee> filter);
 }
