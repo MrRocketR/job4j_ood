@@ -45,7 +45,8 @@ public class GeneratorTest {
         testMap.put("name", "Petr");
         testMap.put("subject", "you");
         TemplateGenerator templateGenerator = new TemplateGenerator();
-        templateGenerator.produce(template, testMap);
+        String rsl = templateGenerator.produce(template, testMap);
+        Assert.assertEquals("I am a Petr, Who are you? ", rsl);
     }
 
     @Ignore
