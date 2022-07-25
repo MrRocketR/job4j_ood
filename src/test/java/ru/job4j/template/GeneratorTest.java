@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 
 public class GeneratorTest {
     private Map<String, String> testMap = new HashMap<>();
-    private Generator testGen = new TemplateGenerator();
     private String template;
 
     @Ignore
@@ -41,10 +40,10 @@ public class GeneratorTest {
     }
 
     @Ignore
-    @Test(expected = IllegalArgumentException.class)
     public void whenProduceWork() {
         template = "I am a ${name}, Who are ${subject}? ";
-        testMap.put("Petr", "Same Petr");
+        testMap.put("name", "Petr");
+        testMap.put("subject", "you");
         TemplateGenerator templateGenerator = new TemplateGenerator();
         templateGenerator.produce(template, testMap);
     }
@@ -53,9 +52,11 @@ public class GeneratorTest {
     @Test(expected = IllegalArgumentException.class)
     public void whenWrongKey() {
         template = "I am a ${name}, Who are ${subject}? ";
-        testMap.put("Petr", "Same Petr");
+        testMap.put("name", "Petra");
+        testMap.put("subject", "you");
         TemplateGenerator templateGenerator = new TemplateGenerator();
         templateGenerator.produce(template, testMap);
-        Assert.assertNotEquals(testMap.get("Petr"), "Same Oleg");
+        Assert.assertNotEquals(testMap.get("name"), "Not Petr");
     }
 }
+

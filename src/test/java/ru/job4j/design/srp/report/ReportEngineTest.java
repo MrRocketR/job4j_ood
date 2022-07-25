@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 import static ru.job4j.design.srp.report.ReportEngine.DATE_FORMAT;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.ocp.JSONReportEngine;
 
@@ -56,6 +57,8 @@ public class ReportEngineTest {
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 
+
+    @Ignore
     @Test
     public void whenGenerateJSON() {
         MemStore store = new MemStore();
