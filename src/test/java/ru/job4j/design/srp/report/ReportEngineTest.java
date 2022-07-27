@@ -2,17 +2,18 @@ package ru.job4j.design.srp.report;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static ru.job4j.design.srp.report.ReportEngine.DATE_FORMAT;
 
 
 import org.junit.Ignore;
 import org.junit.Test;
-import ru.job4j.ocp.JSONReportEngine;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class ReportEngineTest {
 
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
     public static final int MULTY = 12;
     @Test
     public void whenOldGenerated() {
@@ -134,29 +135,52 @@ public class ReportEngineTest {
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 
-    @Ignore
     @Test
-    public void whenGenerateJSON() {
+    public void whenGenerateXML() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        now.set(7, 2022);
-        Employee worker = new Employee("Ivan", now, now, 100);
-        store.add(worker);
-        Report jsonEngine = new JSONReportEngine(store);
-        StringBuilder expect = new StringBuilder()
-                .append("{\"name\":\"Ivan\",\"hired\":")
-                .append("{\"year\":2022,\"month\":6,\"dayOfMonth\":22,"
-                        + "\"hourOfDay\":21,\"minute\":7,\"second\":50},")
-                .append("\"fired\":{\"year\":2022,\"month\":6,\"dayOfMonth\":22"
-                        + ",\"hourOfDay\":21,\"minute\":7,\"second\":50},")
-                .append("\"salary\":100.0}")
-                .append(System.lineSeparator());
+        Employee worker1 = new Employee("Ivan", now, now, 100);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X");
+        String dateString = formatter.format(now.getTime());
+        store.add(worker1);
+        Report engine = new XMLEngine(store);
+        StringBuilder expect = new StringBuilder();
+        String employeeXmlTemplate =
+                "    <employee name=\"%s\" hired=\"%s\" fired=\"%s\" salary=\"%.1f\"/>";
+        expect.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>")
+                .append(System.lineSeparator())
+                .append("<employees>")
+                .append(System.lineSeparator())
+                .append(String.format(Locale.US, employeeXmlTemplate,
+                        worker1.getName(), dateString, dateString, worker1.getSalary()))
+                .append(System.lineSeparator())
+                .append("</employees>");
+        engine.generate(em -> true);
         System.out.println(expect);
-        assertThat(jsonEngine.generate(em -> true), is(expect.toString()));
-        /*
-        {"name":"Ivan","hired":{"year":2022,"month":6,"dayOfMonth":24,"hourOfDay":20,"minute":55,"second":54},"fired":{"year":2022,"month":6,"dayOfMonth":24,"hourOfDay":20,"minute":55,"second":54},"salary":100.0}
-         */
     }
 
-}
+    @Test
+    public void whenJSONGenerated() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X");
+        String dateString = formatter.format(now.getTime());
+        Employee worker1 = new Employee("Ivan", now, now, 100);
+        store.add(worker1);
+        Report engine = new JSONReport(store);
+        String employeeJsonTemplate =
+                "{\"name\":\"%s\",\"hired\":\"%s\",\"fired\":\"%s\",\"salary\":%.1f}";
+        StringBuilder expect = new StringBuilder()
+                .append("{\"employees\":[")
+                .append(String.format(Locale.US, employeeJsonTemplate + ",",
+                        worker1.getName(), dateString, dateString, worker1.getSalary()))
+                .append("]}");
+        System.out.println(engine.generate(em -> true));
+        System.out.println(expect);
+    }
+    }
+
+
+
+
 
