@@ -7,7 +7,7 @@ public class ControlQuality {
     public void setStore(Store store) {
         this.store = store;
     }
-     public void FoodLogistic(Food food) {
-        
+     public void logistic(Food food) {
+
      }
 }

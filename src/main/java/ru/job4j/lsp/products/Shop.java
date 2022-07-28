@@ -5,7 +5,7 @@ package ru.job4j.lsp.products;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shop implements Store{
+public class Shop implements Store {
 
     private final List<Food> store = new ArrayList<>();
     @Override

@@ -11,11 +11,10 @@ public class Password {
         this.pass = pass;
     }
 
-    public String validate (int pass) {
+    public String validate(int pass) {
         if (pass == 0) {
            return "Password is invalid";
         }
-        else
             return "Valid!";
     }
 }

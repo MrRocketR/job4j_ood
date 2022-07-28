@@ -4,18 +4,18 @@ import java.util.Calendar;
 
 public class Food {
 
-    private String Name;
+    private String name;
     private int expiryDate;
     private int createDate;
     private double price;
     private int discount;
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        name = name;
     }
 
     public double getPrice() {

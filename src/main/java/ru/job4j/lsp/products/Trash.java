@@ -3,8 +3,8 @@ package ru.job4j.lsp.products;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trash implements Store{
-    private List<Food> TrashStore = new ArrayList<>();
+public class Trash implements Store {
+    private List<Food> trashStore = new ArrayList<>();
 
     @Override
     public boolean add(Food food) {
@@ -18,6 +18,6 @@ public class Trash implements Store{
 
     @Override
     public List<Food> createListOfProducts() {
-        return TrashStore;
+        return trashStore;
     }
 }

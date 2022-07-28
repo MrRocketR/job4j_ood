@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Storehouse {
     private List<String> depository = new ArrayList<>();
-    public boolean checkStore () {
+    public boolean checkStore() {
         return !depository.isEmpty();
     }
 }

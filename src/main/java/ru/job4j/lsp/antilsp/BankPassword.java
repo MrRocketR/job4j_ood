@@ -15,10 +15,9 @@ public class BankPassword extends Password {
 
     @Override
     public String validate(int pass) {
-        if (pass <= 3 ) {
+        if (pass <= 3) {
             return "Password is too short";
         }
-        else
             return "Valid";
     }
 }

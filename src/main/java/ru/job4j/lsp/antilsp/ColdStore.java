@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColdStore extends Storehouse {
-    private List<String> ColdDepository = new ArrayList<>();
+    private List<String> coldDepository = new ArrayList<>();
     @Override
     public boolean checkStore() {
-        if (ColdDepository.isEmpty()) {
+        if (coldDepository.isEmpty()) {
             throw new IllegalArgumentException("Store is empty");
         }
         return true;
