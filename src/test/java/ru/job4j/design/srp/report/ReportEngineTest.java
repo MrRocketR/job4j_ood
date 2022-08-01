@@ -1,5 +1,6 @@
 package ru.job4j.design.srp.report;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -7,9 +8,11 @@ import static org.hamcrest.Matchers.is;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.StringJoiner;
 
 public class ReportEngineTest {
 
@@ -140,43 +143,53 @@ public class ReportEngineTest {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker1 = new Employee("Ivan", now, now, 100);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X");
-        String dateString = formatter.format(now.getTime());
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        String date = formatter.format(now.getTime());
         store.add(worker1);
         Report engine = new XMLEngine(store);
         StringBuilder expect = new StringBuilder();
-        String employeeXmlTemplate =
-                "    <employee name=\"%s\" hired=\"%s\" fired=\"%s\" salary=\"%.1f\"/>";
         expect.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>")
-                .append(System.lineSeparator())
+                .append("\n")
                 .append("<employees>")
-                .append(System.lineSeparator())
-                .append(String.format(Locale.US, employeeXmlTemplate,
-                        worker1.getName(), dateString, dateString, worker1.getSalary()))
-                .append(System.lineSeparator())
-                .append("</employees>");
-        engine.generate(em -> true);
-        System.out.println(expect);
+                .append("\n")
+                .append("    <employee name=\"Ivan\"")
+                .append(String.format(" hired=\"%s\"", date))
+                .append(String.format(" fired=\"%s\"", date))
+                .append(" salary=\"100.0\"/>")
+                .append("\n")
+                .append("</employees>")
+                .append("\n");
+        assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 
+    @Ignore
     @Test
     public void whenJSONGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss X");
-        String dateString = formatter.format(now.getTime());
+        now.set(2022, 6, 29);
         Employee worker1 = new Employee("Ivan", now, now, 100);
         store.add(worker1);
         Report engine = new JSONReport(store);
-        String employeeJsonTemplate =
-                "{\"name\":\"%s\",\"hired\":\"%s\",\"fired\":\"%s\",\"salary\":%.1f}";
         StringBuilder expect = new StringBuilder()
-                .append("{\"employees\":[")
-                .append(String.format(Locale.US, employeeJsonTemplate + ",",
-                        worker1.getName(), dateString, dateString, worker1.getSalary()))
-                .append("]}");
-        System.out.println(engine.generate(em -> true));
-        System.out.println(expect);
+                .append("[{\"name\":")
+                .append("\"Ivan\",")
+                .append("\"hired\":{")
+                .append(String.format("\"year\":%s,", new SimpleDateFormat("yyyy").format(now.getTime())))
+                .append(String.format("\"month\":%s,", new SimpleDateFormat("M").format(now.getTime())))
+                .append(String.format("\"dayOfMonth\":%s,", new SimpleDateFormat("d").format(now.getTime())))
+                .append(String.format("\"hourOfDay\":%s,", new SimpleDateFormat("H").format(now.getTime())))
+                .append(String.format("\"minute\":%s,", new SimpleDateFormat("mm").format(now.getTime())))
+                .append(String.format("\"second\":%s},", new SimpleDateFormat("ss").format(now.getTime())))
+                .append("\"fired\":{")
+                .append(String.format("\"year\":%s,", new SimpleDateFormat("yyyy").format(now.getTime())))
+                .append(String.format("\"month\":%s,", new SimpleDateFormat("M").format(now.getTime())))
+                .append(String.format("\"dayOfMonth\":%s,", new SimpleDateFormat("d").format(now.getTime())))
+                .append(String.format("\"hourOfDay\":%s,", new SimpleDateFormat("H").format(now.getTime())))
+                .append(String.format("\"minute\":%s,", new SimpleDateFormat("mm").format(now.getTime())))
+                .append(String.format("\"second\":%s},", new SimpleDateFormat("ss").format(now.getTime())))
+                .append("\"salary\":100.0}]");
+        assertThat(engine.generate(em -> true), is(expect.toString()));
     }
     }
 
