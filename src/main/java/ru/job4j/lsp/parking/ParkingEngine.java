@@ -1,6 +1,6 @@
 package ru.job4j.lsp.parking;
 
-public class ParkingEngine implements Parking{
+public class ParkingEngine implements Parking {
     private int[] lots;
 
     @Override

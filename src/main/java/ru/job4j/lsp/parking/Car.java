@@ -1,13 +1,13 @@
 package ru.job4j.lsp.parking;
 
 public class Car {
-    int CarType;
+    private int carType;
 
     public int getCarType() {
-        return CarType;
+        return  carType;
     }
 
     public void setCarType(int carType) {
-        CarType = carType;
+        this.carType = carType;
     }
 }
