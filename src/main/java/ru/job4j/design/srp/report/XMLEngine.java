@@ -1,6 +1,7 @@
 package ru.job4j.design.srp.report;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.StringWriter;
 import java.util.function.Predicate;
@@ -11,8 +12,16 @@ public class XMLEngine implements Report {
     private JAXBContext context;
     private Marshaller marshaller;
 
-    public XMLEngine(Store store) {
+    public XMLEngine(Store store) throws JAXBException {
+
         this.store = store;
+
+        context = JAXBContext.newInstance(Employees.class);
+
+        marshaller = context.createMarshaller();
+
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
     }
 
 
@@ -23,9 +32,6 @@ public class XMLEngine implements Report {
         var employee =  employees.getEmployees();
         String xml = "";
         try (StringWriter writer = new StringWriter()) {
-            context = JAXBContext.newInstance(Employees.class);
-            marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(new Employees(employee), writer);
             xml = writer.getBuffer().toString();
         } catch (Exception e) {

@@ -5,14 +5,12 @@ import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 
-import org.junit.Ignore;
 import org.junit.Test;
-
+import javax.xml.bind.JAXBException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.StringJoiner;
+
 
 public class ReportEngineTest {
 
@@ -139,7 +137,7 @@ public class ReportEngineTest {
     }
 
     @Test
-    public void whenGenerateXML() {
+    public void whenGenerateXML() throws JAXBException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker1 = new Employee("Ivan", now, now, 100);
@@ -162,12 +160,10 @@ public class ReportEngineTest {
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 
-    @Ignore
     @Test
     public void whenJSONGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        now.set(2022, 6, 29);
         Employee worker1 = new Employee("Ivan", now, now, 100);
         store.add(worker1);
         Report engine = new JSONReport(store);
@@ -175,19 +171,19 @@ public class ReportEngineTest {
                 .append("[{\"name\":")
                 .append("\"Ivan\",")
                 .append("\"hired\":{")
-                .append(String.format("\"year\":%s,", new SimpleDateFormat("yyyy").format(now.getTime())))
-                .append(String.format("\"month\":%s,", new SimpleDateFormat("M").format(now.getTime())))
-                .append(String.format("\"dayOfMonth\":%s,", new SimpleDateFormat("d").format(now.getTime())))
-                .append(String.format("\"hourOfDay\":%s,", new SimpleDateFormat("H").format(now.getTime())))
-                .append(String.format("\"minute\":%s,", new SimpleDateFormat("mm").format(now.getTime())))
-                .append(String.format("\"second\":%s},", new SimpleDateFormat("ss").format(now.getTime())))
+                .append(String.format("\"year\":%s,", now.get(Calendar.YEAR)))
+                .append(String.format("\"month\":%s,",   now.get(Calendar.MONTH)))
+                .append(String.format("\"dayOfMonth\":%s,", now.get(Calendar.DAY_OF_MONTH)))
+                .append(String.format("\"hourOfDay\":%s,", now.get(Calendar.HOUR_OF_DAY)))
+                .append(String.format("\"minute\":%s,", now.get(Calendar.MINUTE)))
+                .append(String.format("\"second\":%s},", now.get(Calendar.SECOND)))
                 .append("\"fired\":{")
-                .append(String.format("\"year\":%s,", new SimpleDateFormat("yyyy").format(now.getTime())))
-                .append(String.format("\"month\":%s,", new SimpleDateFormat("M").format(now.getTime())))
-                .append(String.format("\"dayOfMonth\":%s,", new SimpleDateFormat("d").format(now.getTime())))
-                .append(String.format("\"hourOfDay\":%s,", new SimpleDateFormat("H").format(now.getTime())))
-                .append(String.format("\"minute\":%s,", new SimpleDateFormat("mm").format(now.getTime())))
-                .append(String.format("\"second\":%s},", new SimpleDateFormat("ss").format(now.getTime())))
+                .append(String.format("\"year\":%s,", now.get(Calendar.YEAR)))
+                .append(String.format("\"month\":%s,",   now.get(Calendar.MONTH)))
+                .append(String.format("\"dayOfMonth\":%s,", now.get(Calendar.DAY_OF_MONTH)))
+                .append(String.format("\"hourOfDay\":%s,", now.get(Calendar.HOUR_OF_DAY)))
+                .append(String.format("\"minute\":%s,", now.get(Calendar.MINUTE)))
+                .append(String.format("\"second\":%s},", now.get(Calendar.SECOND)))
                 .append("\"salary\":100.0}]");
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
