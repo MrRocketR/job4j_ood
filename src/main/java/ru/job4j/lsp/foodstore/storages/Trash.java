@@ -6,22 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Trash implements Store {
+
     private List<Food> trashStore = new ArrayList<>();
+    public static final int ZERO = 0;
 
     @Override
     public boolean add(Food food) {
         boolean accepted = accept(food);
+        boolean r = false;
         if (accepted) {
             trashStore.add(food);
-            return true;
+            r = true;
         }
-        return false;
+        return r;
     }
 
     @Override
     public boolean accept(Food food) {
         double percent = getPercentLifeExpired(food);
-        return percent <= 0;
+        return percent <= ZERO;
 
     }
 

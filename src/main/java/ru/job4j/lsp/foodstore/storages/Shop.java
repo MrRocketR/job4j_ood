@@ -1,7 +1,6 @@
 package ru.job4j.lsp.foodstore.storages;
 
 
-
 import ru.job4j.lsp.foodstore.model.Food;
 
 import java.util.ArrayList;
@@ -10,29 +9,31 @@ import java.util.List;
 public class Shop implements Store {
 
     private final List<Food> shopStore = new ArrayList<>();
+    public static final int QUARTER = 25;
+    public static final int MORE = 75;
+
     @Override
     public boolean add(Food food) {
         boolean accepted = accept(food);
+        boolean r = false;
         if (accepted) {
             shopStore.add(food);
-            return true;
+            r = true;
         }
-        return false;
+        return r;
     }
-    private void newPrice(Food food) {
-       food.setPrice(food.getPrice() - food.getDiscount());
-    }
+
 
     @Override
     public boolean accept(Food food) {
         double percent = getPercentLifeExpired(food);
         boolean result = false;
-        if (percent >= 25 && percent <= 75) {
+        if (percent >= QUARTER && percent <= MORE) {
             result = true;
         }
-        if (percent > 75) {
-           newPrice(food);
-           result = true;
+        if (percent > MORE) {
+            food.setPrice(food.getPrice() - food.getDiscount());
+            result = true;
         }
         return result;
     }

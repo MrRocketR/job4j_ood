@@ -2,7 +2,7 @@ package ru.job4j.lsp.foodstore.model;
 
 import java.time.LocalDate;
 
-public class Food {
+public abstract class Food {
 
     private String name;
     private LocalDate expiryDate;

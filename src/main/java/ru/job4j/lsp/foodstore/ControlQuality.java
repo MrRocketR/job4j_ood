@@ -14,9 +14,9 @@ public class ControlQuality {
     }
 
     public void addFood(Food food) {
-            for (Store stores : storages) {
-               stores.add(food);
-            }
+        for (Store stores : storages) {
+            stores.add(food);
         }
     }
+}
 

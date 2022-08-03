@@ -7,21 +7,24 @@ import java.util.List;
 
 public class Warehouse implements Store {
     private List<Food> warehouseStore = new ArrayList<>();
+    public static final int ZERO = 0;
+    public static final int QUARTER = 25;
 
     @Override
     public boolean add(Food food) {
         boolean accepted = accept(food);
+        boolean r = false;
         if (accepted) {
             warehouseStore.add(food);
-            return true;
+            r = true;
         }
-        return false;
+        return r;
     }
 
     @Override
     public boolean accept(Food food) {
         double percent = getPercentLifeExpired(food);
-        return percent > 0 && percent < 25;
+        return percent > ZERO && percent < QUARTER;
     }
 
     @Override

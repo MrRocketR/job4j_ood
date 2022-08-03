@@ -38,24 +38,19 @@ public class ControlQualityTest {
 
     @Before
     public void createTestFoodObjects() {
-        macaroni = new Groceries("Makfa",
-                LocalDate.of(2022, 1, 30),
-                LocalDate.of(2022, 12, 30), 9.99, 3);
+        macaroni = new Groceries("Makfa", LocalDate.now().minusMonths(7),
+                LocalDate.now().plusMonths(3), 9.99, 3);
         yoghurt = new Milk("Chudo",
-                LocalDate.of(2022, 8, 1),
-                LocalDate.of(2022, 9, 1),
+                LocalDate.now(), LocalDate.now().plusMonths(1),
                 3.0, 1);
         chickenNugget = new Meat("Petelinka",
-                LocalDate.of(2022, 1, 1),
-                LocalDate.of(2023, 1, 1),
+                LocalDate.now().minusMonths(7), LocalDate.now().plusMonths(12),
                 5.5, 2);
         oldYoghurt = new Milk("DamnWhatASmell",
-                LocalDate.of(2022, 6, 1),
-                LocalDate.of(2022, 7, 1),
+                LocalDate.now().minusMonths(2), LocalDate.now().minusMonths(1),
                 0.35, 0);
         beans = new Groceries("UncleBeanGoods",
-                LocalDate.of(2022, 2, 1),
-                LocalDate.of(2022, 9, 1),
+                LocalDate.now().minusMonths(6), LocalDate.now().plusMonths(1),
                 6.50, 3);
     }
 
@@ -93,5 +88,25 @@ public class ControlQualityTest {
         System.out.println(actual.get(0).getPrice());
         Assert.assertEquals((int) newPrice, (int) 2.0);
     }
+
+    @Test
+    public void whenAllAdded() {
+        controlQuality.addFood(macaroni);
+        controlQuality.addFood(chickenNugget);
+        controlQuality.addFood(oldYoghurt);
+        controlQuality.addFood(beans);
+        List<Food> actualShop = shop.getStore();
+        List<Food> actualWarehouse = warehouse.getStore();
+        List<Food> actualTrash = trash.getStore();
+        List<Food> expectedShop = List.of(macaroni, chickenNugget);
+        List<Food> expectedWarehouse = List.of(beans);
+        List<Food> expectedTrash = List.of(oldYoghurt);
+        Assert.assertEquals(expectedShop, actualShop);
+        Assert.assertEquals(expectedWarehouse, actualWarehouse);
+        Assert.assertEquals(expectedTrash, actualTrash);
+
+    }
+
+
 
 }
