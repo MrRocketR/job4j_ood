@@ -6,12 +6,10 @@ public class Truck extends Transport {
 
     public Truck(String name, int size) {
         super(name);
-        if (size >= 1) {
-            this.size = size;
-        } else {
+        if (size < 1) {
             throw new IllegalArgumentException("wrong size of the truck!");
         }
-
+        this.size = size;
     }
 
     public int getSize() {
