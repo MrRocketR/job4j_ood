@@ -4,9 +4,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MoscowParking implements Parking {
+    private int passenderlots;
+    private int trucklots;
+    private Set<Transport> passengerParking;
+    private Set<Truck> truckParking;
 
-    private Set<Transport> passengerParking = new HashSet<>();
-    private Set<Truck> truckParking = new HashSet<>();
+    public MoscowParking(int  passenger, int trucks) {
+        this.passenderlots = passenger;
+        this.trucklots = trucks;
+        passengerParking = new HashSet<>(passenger);
+        truckParking = new HashSet<>(trucks);
+    }
 
     @Override
     public boolean park(Transport car) {
