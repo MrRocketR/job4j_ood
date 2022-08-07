@@ -15,12 +15,12 @@ public class Shop implements Store {
     @Override
     public boolean add(Food food) {
         boolean accepted = accept(food);
-        boolean r = false;
+        boolean result = false;
         if (accepted) {
             shopStore.add(food);
-            r = true;
+            result = true;
         }
-        return r;
+        return result;
     }
 
 
