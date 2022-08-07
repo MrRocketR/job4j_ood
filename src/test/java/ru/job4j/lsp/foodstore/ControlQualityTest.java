@@ -13,6 +13,7 @@ import ru.job4j.lsp.foodstore.storages.Trash;
 import ru.job4j.lsp.foodstore.storages.Warehouse;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,7 +34,8 @@ public class ControlQualityTest {
         shop = new Shop();
         warehouse = new Warehouse();
         trash = new Trash();
-        controlQuality = new ControlQuality(List.of(shop, warehouse, trash));
+        List<Store> testListStorages = new ArrayList<>(List.of(shop, warehouse, trash));
+        controlQuality = new ControlQuality(testListStorages);
     }
 
     @Before
@@ -106,7 +108,24 @@ public class ControlQualityTest {
         Assert.assertEquals(expectedTrash, actualTrash);
 
     }
+    @Test
+    public void whenResortTest() {
+        controlQuality.addFood(macaroni);
+        controlQuality.addFood(chickenNugget);
+        controlQuality.addFood(oldYoghurt);
+        controlQuality.addFood(beans);
+        controlQuality.resort();
+        List<Food> actualShop = shop.getStore();
+        List<Food> actualWarehouse = warehouse.getStore();
+        List<Food> actualTrash = trash.getStore();
+        List<Food> expectedShop = List.of(macaroni, chickenNugget);
+        List<Food> expectedWarehouse = List.of(beans);
+        List<Food> expectedTrash = List.of(oldYoghurt);
+        Assert.assertEquals(expectedShop, actualShop);
+        Assert.assertEquals(expectedWarehouse, actualWarehouse);
+        Assert.assertEquals(expectedTrash, actualTrash);
 
+    }
 
 
 }

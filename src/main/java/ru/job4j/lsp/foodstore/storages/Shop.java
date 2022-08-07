@@ -43,5 +43,10 @@ public class Shop implements Store {
         return List.copyOf(shopStore);
     }
 
+    @Override
+    public void empty() {
+        shopStore.clear();
+    }
+
 
 }

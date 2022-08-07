@@ -22,4 +22,7 @@ public interface Store {
 
     List<Food> getStore();
 
+    void empty();
+
+
 }
