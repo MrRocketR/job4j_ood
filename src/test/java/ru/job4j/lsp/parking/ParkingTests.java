@@ -1,4 +1,4 @@
-package ru.job4j.lsp.foodstore;
+package ru.job4j.lsp.parking;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,21 +21,17 @@ public class ParkingTests {
     private PassengerCar tinyPorsche;
 
 
-    @Ignore
     @Before
     public void initParking() {
         parking = new MoscowParking(2, 1);
-        redCar = new PassengerCar("Small red car");
-        blueCar = new PassengerCar("Small blue car");
-        cyberTruck = new Truck("that's big", 2);
-        superTruck = new Truck("truck", 3);
-        smallTruck = new Truck("TinyTrack", 1);
-        tinyPorsche = new PassengerCar("bip bip");
-
-
+        redCar = new PassengerCar("redCar", "101");
+        blueCar = new PassengerCar("blueCar", "222");
+        cyberTruck = new Truck("cyberTruck", "666", 4);
+        superTruck = new Truck("superTruck", "555", 3);
+        smallTruck = new Truck("smallTruck", "000", 2);
+        tinyPorsche = new PassengerCar("tinyPorsche", "007");
     }
 
-    @Ignore
     @Test
     public void whenSuccessParkTwoSmallAndOneTruck() {
         assertTrue(parking.park(redCar));
@@ -43,22 +39,20 @@ public class ParkingTests {
         assertTrue(parking.park(cyberTruck));
     }
 
-    @Ignore
+
     @Test
     public void whenSuccessParkOnlyTrucks() {
         assertTrue(parking.park(superTruck));
-        assertTrue(parking.park(cyberTruck));
+        assertTrue(parking.park(smallTruck));
     }
 
-    @Ignore
     @Test
     public void whenFalseParkTrucks() {
         assertTrue(parking.park(superTruck));
-        assertTrue(parking.park(cyberTruck));
-        assertFalse(parking.park(smallTruck));
+        assertTrue(parking.park(smallTruck));
+        assertFalse(parking.park(cyberTruck));
     }
 
-    @Ignore
     @Test
     public void whenNoPlaceForCars() {
         assertTrue(parking.park(redCar));
@@ -66,7 +60,6 @@ public class ParkingTests {
         assertFalse(parking.park(tinyPorsche));
     }
 
-    @Ignore
     @Test
     public void whenNoEmptyParkSpaces() {
         assertTrue(parking.park(redCar));
@@ -75,5 +68,11 @@ public class ParkingTests {
         assertFalse(parking.park(tinyPorsche));
     }
 
+
+    @Test
+    public void whenAlreadyParked() {
+        assertTrue(parking.park(redCar));
+        assertFalse(parking.park(redCar));
+    }
 
 }
