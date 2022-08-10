@@ -21,7 +21,7 @@ public class MoscowParking implements Parking {
     public boolean park(Transport car) {
         boolean result = false;
         if (car.getSize() == 1) {
-            if (passenderlots >= passengerParking.size()) {
+            if (passenderlots > 0) {
                 result = passengerParking.add(car);
                 passenderlots--;
             }
@@ -33,13 +33,13 @@ public class MoscowParking implements Parking {
 
     private boolean setTruckParking(Transport car) {
         boolean result = false;
-        if (trucklots >= truckParking.size()) {
+        if (trucklots >= 0) {
             result = truckParking.add(car);
             trucklots--;
         }
         if (!result) {
             int passengerParkSize = passenderlots - car.getSize();
-            if (passengerParkSize >= 0) {
+            if (passengerParkSize > 0) {
                 result = passengerParking.add(car);
                 passenderlots--;
             }

@@ -26,10 +26,11 @@ public class ParkingTests {
         parking = new MoscowParking(2, 1);
         redCar = new PassengerCar("redCar", "101");
         blueCar = new PassengerCar("blueCar", "222");
+        tinyPorsche = new PassengerCar("tinyPorsche", "007");
         cyberTruck = new Truck("cyberTruck", "666", 4);
         superTruck = new Truck("superTruck", "555", 3);
         smallTruck = new Truck("smallTruck", "000", 2);
-        tinyPorsche = new PassengerCar("tinyPorsche", "007");
+
     }
 
     @Test
@@ -73,6 +74,26 @@ public class ParkingTests {
     public void whenAlreadyParked() {
         assertTrue(parking.park(redCar));
         assertFalse(parking.park(redCar));
+    }
+
+    @Test
+    public void whenFullParking() {
+        MoscowParking bigParking = new MoscowParking(5, 5);
+        PassengerCar anotherCar = new PassengerCar("anotherCar", "999");
+        PassengerCar fifthCar = new PassengerCar("fifthCar", "111");
+        Truck amaTruck = new Truck("amaTruck", "321", 2);
+        Truck fifthTruck = new Truck("fifthTruck", "345", 5);
+        assertTrue(bigParking.park(redCar));
+        assertTrue(bigParking.park(blueCar));
+        assertTrue(bigParking.park(tinyPorsche));
+        assertTrue(bigParking.park(anotherCar));
+        assertTrue(bigParking.park(fifthCar));
+        assertTrue(bigParking.park(cyberTruck));
+        assertTrue(bigParking.park(superTruck));
+        assertTrue(bigParking.park(smallTruck));
+        assertTrue(bigParking.park(amaTruck));
+        assertTrue(bigParking.park(fifthTruck));
+
     }
 
 }
