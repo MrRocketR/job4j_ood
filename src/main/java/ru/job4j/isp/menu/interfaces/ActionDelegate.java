@@ -1,4 +1,4 @@
-package ru.job4j.isp.menu;
+package ru.job4j.isp.menu.interfaces;
 
 public interface ActionDelegate {
 
