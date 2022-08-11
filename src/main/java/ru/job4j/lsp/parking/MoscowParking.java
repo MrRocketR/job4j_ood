@@ -13,15 +13,15 @@ public class MoscowParking implements Parking {
     public MoscowParking(int passenger, int trucks) {
         this.passenderlots = passenger;
         this.trucklots = trucks;
-        passengerParking = new HashSet<>();
-        truckParking = new HashSet<>();
+        passengerParking = new HashSet<>(passenger);
+        truckParking = new HashSet<>(trucks);
     }
 
     @Override
     public boolean park(Transport car) {
         boolean result = false;
-        if (car.getSize() == 1) {
-            if (passenderlots > 0) {
+        if (PassengerCar.SIZE == car.getSize()) {
+            if (passenderlots != 0) {
                 result = passengerParking.add(car);
                 passenderlots--;
             }
@@ -33,16 +33,13 @@ public class MoscowParking implements Parking {
 
     private boolean setTruckParking(Transport car) {
         boolean result = false;
-        if (trucklots >= 0) {
+        if (trucklots > 0) {
             result = truckParking.add(car);
             trucklots--;
         }
-        if (!result) {
-            int passengerParkSize = passenderlots - car.getSize();
-            if (passengerParkSize > 0) {
-                result = passengerParking.add(car);
-                passenderlots--;
-            }
+        if (!result && passenderlots - car.getSize() >= 0) {
+            result = passengerParking.add(car);
+            passenderlots--;
         }
         return result;
     }
