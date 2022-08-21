@@ -3,6 +3,6 @@ Simple programs from job4j that demonstrate OOD.
 1. пакет ru.job4j.antisolid содержит примеры нарушений принципа solid
 2. пакет ru.job4j.lsp содержит два проекта:
    lsp.parking - парковка машин
-   lsp.foodstore -распределитеть продуктов 
+   lsp.foodstore - распределитель продуктов питания
 3. ru.job4j.kiss пример KISS - keep it simple and short
 4. Кроме того, в данном проект есть примеры метода разработки TDD (пакет ru.job4j.tdd)
